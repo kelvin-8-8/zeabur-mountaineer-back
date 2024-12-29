@@ -32,7 +32,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://zeabur-mountaineer-front.zeabur.internal:8080", allowCredentials = "true")
+@CrossOrigin(origins = "https://zeabur-mountaineer-front.zeabur.internal:8080", allowCredentials = "true")
 public class UserController {
 
     @Autowired
