@@ -23,7 +23,7 @@ import java.util.List;
  * */
 @RestController
 @RequestMapping("/order")
-@CrossOrigin(origins = "https://zeabur-mountaineer-front.zeabur.internal:8080", allowCredentials = "true")
+@CrossOrigin(origins = "https://mountaineer.zeabur.app", allowCredentials = "true")
 public class OrderController {
 
     @Autowired

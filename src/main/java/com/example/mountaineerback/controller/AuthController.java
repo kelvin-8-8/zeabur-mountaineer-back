@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/verify")
-@CrossOrigin(origins = "https://zeabur-mountaineer-front.zeabur.internal:8080", allowCredentials = "true")
+@CrossOrigin(origins = "https://mountaineer.zeabur.app", allowCredentials = "true")
 public class AuthController {
 
     @Value("${SECRET_KEY_RECAPTCHA}")
