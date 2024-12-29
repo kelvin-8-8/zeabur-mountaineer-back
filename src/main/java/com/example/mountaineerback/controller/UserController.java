@@ -98,6 +98,7 @@ public class UserController {
     @GetMapping("/checkLogin")
     public ResponseEntity<ApiResponse<Boolean>> checkLogin(HttpSession session) {
         UserDTO userdto = (UserDTO) session.getAttribute("userDTO");
+        System.out.println("checkLogin的session:  " + session);
         if(userdto == null) {
             return ResponseEntity.ok(ApiResponse.success("未登入", false));
         }
@@ -108,6 +109,7 @@ public class UserController {
     @GetMapping("/checkRole")
     public ResponseEntity<ApiResponse<RegisterResponse>> checkRole(HttpSession session) {
         UserDTO userdto = (UserDTO) session.getAttribute("userDTO");
+        System.out.println("checkRole的session:  " + session);
         if(userdto == null) {
             return ResponseEntity.ok(ApiResponse.error(403, "沒有Session 或 Session已過期"));
         }
