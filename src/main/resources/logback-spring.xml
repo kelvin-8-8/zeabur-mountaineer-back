@@ -1,0 +1,46 @@
+<configuration>
+    <!-- 定義日誌輸出的格式 -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- 定義日誌檔案存放目錄 -->
+    <property name="LOG_PATH" value="logs" />
+
+    <!-- 滾動檔案的配置 -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日誌檔案名稱 -->
+        <file>${LOG_PATH}/application.log</file>
+
+        <!-- 滾動策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天生成一個新檔案，名稱包含日期 -->
+            <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 保留最近20個日誌檔案 -->
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+
+        <!-- 限制日誌文件大小 -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <!-- 設定最大文件大小為10MB -->
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+
+        <!-- 日誌格式 -->
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Console 輸出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 使用內建的 ANSI 顏色代碼 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 設定日誌級別 -->
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING_FILE" />
+    </root>
+</configuration>
