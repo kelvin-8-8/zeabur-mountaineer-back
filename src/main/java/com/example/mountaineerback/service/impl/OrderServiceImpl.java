@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.example.mountaineerback.model.enums.ORDER_STATUS.STATUS_WAIT;
+import static com.example.mountaineerback.model.enums.ORDER_STATUS.*;
 
 @Transactional
 @Service
@@ -93,5 +93,37 @@ public class OrderServiceImpl implements OrderService{
 
         // 5. 返回 DTO
         return modelMapper.map(order, OrderDTO.class);
+    }
+
+    @Override
+    public OrderDTO updateOrder(Long id) {
+        Optional<Order> optOrder = orderRepository.findById(id);
+
+        if (optOrder.isEmpty()) return null;
+        Order order = optOrder.get();
+        if (optOrder.get().getStatus() == STATUS_WAIT) {
+            order.setStatus(STATUS_SUCCESS);
+        } else if (optOrder.get().getStatus() == STATUS_SUCCESS) {
+            order.setStatus(STATUS_BORROW);
+        } else if (optOrder.get().getStatus() == STATUS_BORROW) {
+            order.setStatus(STATUS_COMPLETE);
+        }
+        orderRepository.save(order);
+
+        return modelMapper.map(order, OrderDTO.class);
+    }
+
+    @Override
+    public OrderDTO cancelOrder(Long id) {
+        Optional<Order> optOrder = orderRepository.findById(id);
+
+        if (optOrder.isEmpty()) return null;
+        Order order = optOrder.get();
+        order.setStatus(STATUS_CANCEL);
+
+        OrderDTO orderdto = modelMapper.map(optOrder.get(), OrderDTO.class);
+        orderRepository.save(order);
+
+        return orderdto;
     }
 }

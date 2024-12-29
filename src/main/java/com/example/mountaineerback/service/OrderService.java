@@ -18,8 +18,9 @@ public interface OrderService {
     public OrderDTO addOrder(Long userid, OrderRequest orderRequest);
 
     // 刪除
-    // TODO
+    public OrderDTO cancelOrder(Long id);
 
-    //
+    //修改
+    public OrderDTO updateOrder(Long id);
 
 }

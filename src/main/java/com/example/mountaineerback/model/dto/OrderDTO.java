@@ -20,5 +20,6 @@ public class OrderDTO {
     private Integer duration;
     private LocalDateTime createdAt;
     private ORDER_STATUS status;
+    private UserDTO user;
     private List<OrderItemDTO> items;
 }

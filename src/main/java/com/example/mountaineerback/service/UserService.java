@@ -6,6 +6,7 @@ import com.example.mountaineerback.model.request.RegisterRequest;
 import com.example.mountaineerback.model.dto.UserDTO;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -15,6 +16,8 @@ public interface UserService {
 
     Optional<UserDTO> update(Long userId, ChangeRequest changeRequest);
 
-    // 用戶
+    List<UserDTO> getAll();
+
+    UserDTO upgrade(Long id);
 
 }

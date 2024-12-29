@@ -90,8 +90,21 @@ public class EquipmentServiceImpl implements EquipmentService {
     public Optional<EquipmentDTO> changeEquipment(EquipmentRequest equipmentRequest) {
 
         Optional<Equipment> optEquipment= equipmentRepository.findById(equipmentRequest.getId());
+
         if (optEquipment.isPresent()) {
-            EquipmentDTO equipmentDTO = modelMapper.map(equipmentRequest, EquipmentDTO.class);
+
+            EQUIPMENT_TYPE enumType = EQUIPMENT_TYPE.valueOf(equipmentRequest.getType());
+            // 修改資料
+            optEquipment.get().setName(equipmentRequest.getName());
+            optEquipment.get().setDescription(equipmentRequest.getDescription());
+            optEquipment.get().setPrice(equipmentRequest.getPrice());
+            optEquipment.get().setType(enumType);
+
+            equipmentRepository.save(optEquipment.get());
+
+            EquipmentDTO equipmentDTO = modelMapper.map(optEquipment.get(), EquipmentDTO.class);
+            equipmentDTO.setUrl(optEquipment.get().getEquipmentImage().getUrl());
+
             return Optional.of(equipmentDTO);
         }
 

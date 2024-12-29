@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class Equipment {
     private String description;
 
     @OneToMany(mappedBy = "equipment")
+    @ToString.Exclude
     private List<OrderItem> orderItems;
 
     // 與 EquipmentImage 的一對一關聯 (單向)

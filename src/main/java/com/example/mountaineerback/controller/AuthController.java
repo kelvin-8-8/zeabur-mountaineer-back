@@ -1,7 +1,6 @@
 package com.example.mountaineerback.controller;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -12,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/verify")
 @CrossOrigin(origins = "https://mountaineer.zeabur.app", allowCredentials = "true")
 public class AuthController {
-
-    @Value("${SECRET_KEY_RECAPTCHA}")
-    private String SECRET_KEY;
-//    private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY_RECAPTCHA");
+    private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY_RECAPTCHA");
 
     @PostMapping()
     public ResponseEntity<String> verifyRecaptcha(@RequestBody String token) {

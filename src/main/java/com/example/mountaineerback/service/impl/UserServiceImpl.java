@@ -11,9 +11,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static com.example.mountaineerback.model.enums.USER_ROLE.ROLE_GUEST;
+import static com.example.mountaineerback.model.enums.USER_ROLE.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     //修改
+    @Override
     public Optional<UserDTO> update(Long userId, ChangeRequest changeRequest) {
         Optional<User> optUser = userRepository.findById(userId);
 
@@ -91,5 +94,28 @@ public class UserServiceImpl implements UserService {
             }
         }
        return Optional.empty();
+    }
+
+    // 取得
+    @Override
+    public List<UserDTO> getAll() {
+        return userRepository.findAll().stream()
+                .map(order -> modelMapper.map(order, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO upgrade(Long id) {
+
+        Optional<User> optUser = userRepository.findById(id);
+        if(optUser.isPresent()) {
+            if(optUser.get().getRole().equals(ROLE_GUEST)) {
+                optUser.get().setRole(ROLE_MEMBER);
+            } else if (optUser.get().getRole().equals(ROLE_MEMBER)) {
+                optUser.get().setRole(ROLE_ADMIN);
+            }
+            userRepository.save(optUser.get());
+        }
+        return modelMapper.map(optUser.orElse(null), UserDTO.class);
     }
 }

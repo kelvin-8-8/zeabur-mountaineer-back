@@ -61,7 +61,7 @@ public class EquipmentController {
 
 
     // 刪除
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<ApiResponse<String>> deleteEquipmentId(@RequestBody EquipmentRequest equipmentRequest) {
 
         Boolean bool = equipmentService.deleteEquipment(equipmentRequest.getId());
@@ -74,12 +74,12 @@ public class EquipmentController {
 
 
     // 修改裝備
-    @GetMapping("/change")
+    @PostMapping("/change")
     public ResponseEntity<ApiResponse<EquipmentDTO>> deleteEquipment(@RequestBody EquipmentRequest equipmentRequest) {
 
         Optional<EquipmentDTO> optEquipmentDTO = equipmentService.changeEquipment(equipmentRequest);
         if (optEquipmentDTO.isPresent()) {
-            return ResponseEntity.ok(ApiResponse.success("登入成功", optEquipmentDTO.get()));
+            return ResponseEntity.ok(ApiResponse.success("修改成功", optEquipmentDTO.get()));
         }
         return ResponseEntity.status(403).body(ApiResponse.error(403, "未知錯誤"));
     }
