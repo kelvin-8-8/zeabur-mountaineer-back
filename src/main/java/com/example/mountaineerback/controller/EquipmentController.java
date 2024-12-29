@@ -27,7 +27,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/equip")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "http://zeabur-mountaineer-front.zeabur.internal:8080", allowCredentials = "true")
 public class EquipmentController {
 
     @Autowired
