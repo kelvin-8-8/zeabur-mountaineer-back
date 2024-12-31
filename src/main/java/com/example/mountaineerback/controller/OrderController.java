@@ -84,9 +84,7 @@ public class OrderController {
         if(userDTO == null) {
             return ResponseEntity.status(403).body(ApiResponse.error(403,"未登入"));
         }
-        if (userDTO.getRole().equals("ROLE_GUEST")) {
-            return ResponseEntity.status(403).body(ApiResponse.error(403,"權限不足"));
-        }
+
         OrderDTO orderDTO = orderService.cancelOrder(id);
         log.info("使用者:{}  取消訂單編號:{}", userDTO.getUsername(), id);
         return ResponseEntity.ok(ApiResponse.success("取消成功", orderDTO));
